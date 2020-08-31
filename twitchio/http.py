@@ -82,6 +82,7 @@ class HTTPSession:
         url = f'{self.BASE}{url}'
         params = params or []
         count = kwargs.pop('count', False)
+        full_reply = isinstance(kwargs.get('full_reply', False), bool) and kwargs.pop('full_reply', False)
         headers = kwargs.pop('headers', {})
         data = []
         total = -1
@@ -146,7 +147,7 @@ class HTTPSession:
                 if not cursor:
                     break
 
-            if isinstance(kwargs.get('full_reply', False), bool) and kwargs.pop('full_reply', False):
+            if full_reply:
                 return {'data': data, 'total': total, 'cursor': cursor}
 
         return data
