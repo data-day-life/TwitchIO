@@ -82,10 +82,10 @@ class HTTPSession:
         url = f'{self.BASE}{url}'
         params = params or []
         count = kwargs.pop('count', False)
-        full_reply = isinstance(kwargs.get('full_reply', False), bool) and kwargs.pop('full_reply', False)
         headers = kwargs.pop('headers', {})
         data = []
         total = -1
+        full_reply = isinstance(kwargs.get('full_reply', False), bool) and kwargs.pop('full_reply', False)
 
         if self.client_id is not None:
             headers['Client-ID'] = str(self.client_id)
@@ -98,7 +98,7 @@ class HTTPSession:
             headers['Authorization'] = "Bearer " + self.token
         # else: we'll probably get a 401, but we can check this in the response
 
-        if limit == 0:  # Guard - assumes that if given limit was zero, then client wanted all results
+        if limit == 0:  # Helper: If given limit was zero then caller wants all results
             limit = None
 
 
@@ -132,25 +132,27 @@ class HTTPSession:
             except KeyError:
                 pass
             
-            params.pop()  # remove the first param
+            params.pop()  # removes ('first', '100')
 
             if cursor is not None:
-                params.pop()
+                params.pop()    # removes ('after', '<cursor_val>')
 
             data += body['data']
 
             try:
                 cursor = body['pagination'].get('cursor', None)
             except KeyError:
+                cursor = None
                 break
             else:
                 if not cursor:
+                    cursor = None
                     break
 
-            if full_reply:
-                return {'data': data, 'total': total, 'cursor': cursor}
-
-        return data
+        if full_reply:
+            return {'data': data, 'total': total, 'cursor': cursor}
+        else:
+            return data
 
     async def _request(self, method, url, utilize_bucket=True, **kwargs):
         reason = None
