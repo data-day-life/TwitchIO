@@ -129,6 +129,9 @@ class HTTPSession:
             
             try:
                 total = body['total']
+                # Spares redundant call when total < 100
+                if total and total < limit:
+                    limit = total
             except KeyError:
                 pass
             
