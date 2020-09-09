@@ -32,7 +32,7 @@ __version__ = '1.1.0'
 
 import logging
 
-from .dataclasses import *
+from .data_classes import *
 from .errors import *
 from .enums import *
 from .client import Client

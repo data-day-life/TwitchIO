@@ -39,7 +39,7 @@ import websockets
 from typing import Union
 
 from .backoff import ExponentialBackoff
-from .dataclasses import *
+from .data_classes import *
 from .errors import WSConnectionFailure, AuthenticationError, ClientError
 
 

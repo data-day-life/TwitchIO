@@ -38,7 +38,7 @@ from .core import Command, AutoCog
 from .errors import *
 from .stringparser import StringParser
 from twitchio.client import Client
-from twitchio.dataclasses import Context
+from twitchio.data_classes import Context
 from twitchio.errors import ClientError
 from twitchio.webhook import TwitchWebhookServer
 from twitchio.websocket import WebsocketConnection
@@ -728,16 +728,16 @@ class Bot(Client):
         pass
 
     async def event_usernotice_subscription(self, metadata):
-        """|coro|
+	    """|coro|
 
-        Event called when a USERNOTICE subscription or re-subscription event is received from Twitch.
+		Event called when a USERNOTICE subscription or re-subscription event is received from Twitch.
 
-        Parameters
-        ------------
-        metadata: :class:`twitchio.dataclasses.NoticeSubscription`
-            The object containing various metadata about the subscription event.
-            For ease of use, this contains a :class:`.User` and :class:`.Channel`.
-        """
+		Parameters
+		------------
+		metadata: :class:`twitchio.data_classes.pyi.NoticeSubscription`
+			The object containing various metadata about the subscription event.
+			For ease of use, this contains a :class:`.User` and :class:`.Channel`.
+		"""
         pass
 
     async def event_part(self, user):
